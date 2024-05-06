@@ -61,4 +61,36 @@
 >./Read_BinOut_Calibrate_v1 Data_pointsource/173228.492_SET3_HV1500-1600_T38-36-37-37C_BG_60S_HighestPeak Data_pointsource/174133.387_SET3_HV1500-1600_T38-39-37-38C_NA22-D6CM-CENTER_L-52.5MM_60S_HighestPeak Data_pointsource/182452.671_SET3_HV1500-1600_T38-39-37-38C_CS137-D6CM-CENTER_L-52.5MM_60S_HighestPeak Data_pointsource/181821.792_SET3_HV1500-1600_T38-39-37-38C_CO60-D6CM-CENTER_L-52.5MM_300S_HighestPeak Data_pointsource/173228.492_SET3_HV1500-1600_T38-36-37-37C_BG_60S_SecondHighestPeak_v2
 # To run this program, at least 3 input files are required (corresponding to 3 peaks for 3 parameter from the energy fitting function) (number of argument are not limited)
 #  This program will give the 2Dmap of Chi2 for all channel to evaluate the fitting performance
-# Fitting functions are also displayed for all channels in EnergyCal/fitting/ dirrectory
+# Fitting functions are also displayed for all channels in EnergyCal/fitting/ directory
+
+##################################### Update correction for energy calibration ###############################################################
+#To run the code for energy calibration update from the ASPET .bin (this program should read the measurement of BG 306.82 keV or PAG 511 keV as dominator)
+
+#Go to the directory
+
+#complie ReadBinary file
+
+g++ BinaryRead9-LAB240506_EnergyCalCorrection.cpp -o BinaryRead9-LAB240506_EnergyCalCorrection `root-config --cflags --glibs` -lSpectrum
+
+
+#This program will read the spectrum of each channel, pick up the highest and clearest energy peak and estimate the deviation from the calibration file in keV
+
+# The program also displays the energy spectra of all channels and the corresponding peak pickup and fitting
+
+#To execute the program; there are examples below with 6 arguments 
+
+./BinaryRead9-LAB240506_EnergyCalCorrection Data/101740.889_C1BG Energy_Calibration_221226_v1.txt 100 800 0.6 7 306.82
+
+argv[1]: The measurement of the investigated date (BG or PAG 511 keV spectra): .bin file
+
+argv[2]: the original energy calibration file
+
+argv[3-4]: boundary in ToT of the energy spectra
+
+argv[5-6]: peak finding parameters for the spectrum
+
+argv[7]: The known dominating gamma line in the measurement spectrum
+
+#The program will create folders: CalUpdate ; CalUpdate/Spectrum 
+
+
