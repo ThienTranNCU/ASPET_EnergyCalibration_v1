@@ -1,0 +1,28 @@
+#To run the code for energy calibration update from the ASPET .bin (this program should read the measurement of BG 306.82 keV or PAG 511 keV as dominator)
+
+#Go to the directory
+
+#complie ReadBinary file
+
+g++ BinaryRead9-LAB240506_EnergyCalCorrection.cpp -o BinaryRead9-LAB240506_EnergyCalCorrection `root-config --cflags --glibs` -lSpectrum
+
+
+#This program will read the spectrum of each channel, pick up the highest and clearest energy peak and estimate the deviation from the calibration file in keV
+
+# The program also displays the energy spectra of all channel and the corresponding peak pickup and fitting
+
+#To execute the program; there are examples below with 6 arguments 
+
+./BinaryRead9-LAB240506_EnergyCalCorrection Data/101740.889_C1BG Energy_Calibration_221226_v1.txt 100 800 0.6 7 306.82
+
+argv[1]: The measurement of the investigated date (BG or PAG 511 keV spectra): .bin file
+
+argv[2]: the original energy calibration file
+
+argv[3-4]: boundary in ToT of the energy spectra
+
+argv[5-6]: peak finding parameters for the spectrum
+
+argv[7]: The known dominating gamma line in the measurement spectrum
+
+#The program will create folders: CalUpdate ; CalUpdate/Spectrum 
